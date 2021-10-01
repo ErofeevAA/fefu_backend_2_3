@@ -43,6 +43,12 @@ services:
           test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
           retries: 3
           timeout: 5s
+    adminer:
+        image: 'adminer:latest'
+        ports:
+            - '${ADMINER_PORTS}'
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
