@@ -22,29 +22,56 @@
     </head>
     <body class="antialiased">
         <h2>Отправить сообщение</h2>
-        @if ($success)
-            <p>Обращение успешно отправлено</p>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
         @endif
-        @foreach($errors as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-        <form method="POST" action="{{ route('appeal') }}">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form method="POST" action="{{ route('save_appeal') }}">
             @csrf
             <div>
                 <label>Имя</label>
-                <input class="border-t" name="name" type="text" value="{{ request()->isMethod('post') ? old('name') : ''}}" maxlength="20" />
+                <input class="border-t" name="name" type="text" value="{{ old('name') }}" />
+            </div>
+            <div>
+                <label>Фамилия</label>
+                <input class="border-t" name="surname" type="text" value="{{ old('surname') }}" />
+            </div>
+            <div>
+                <label>Отчество</label>
+                <input class="border-t" name="patronymic" type="text" value="{{ old('patronymic') }}"/>
+            </div>
+            <div>
+                <label>Возраст</label>
+                <input class="border-t" name="age" type="text" value="{{ old('age') }}"/>
             </div>
             <div>
                 <label>Телефон</label>
-                <input class="border-t" name="phone" type="tel" value="{{ request()->isMethod('post') ? old('phone') : ''}}" maxlength="11" />
+                <input class="border-t" name="phone" type="text" value="{{  old('phone') }}" />
             </div>
             <div>
                 <label>E-mail</label>
-                <input class="border-t" name="email" type="email" value="{{ request()->isMethod('post') ? old('email') : ''}}" maxlength="100" />
+                <input class="border-t" name="email" type="text" value="{{  old('email') }}" />
             </div>
             <div>
                 <label>Сообщение</label>
-                <textarea class="border-t" name="message" value="{{ request()->isMethod('post') ? old('message') : ''}}" maxlength="100" ></textarea>
+                <textarea class="border-t" name="message">{{ old('message') }}</textarea>
+            </div>
+            <div>
+                <label>Пол</label>
+                <select name="gender">
+                    <option value="0" {{ old('gender') == 0 ? 'selected="selected"' : ''}}>Муж</option>
+                    <option value="1" {{ old('gender') == 1 ? 'selected="selected"' : ''}}>Жен</option>
+                </select>
             </div>
             <input type="submit" />
         </form>
