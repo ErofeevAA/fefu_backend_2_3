@@ -27,6 +27,10 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if ($showMessage)
+            <p>Ваше сообщение очень важно для нас</p>
+            <a href="{{url()->previous()}}">Назад</a>
+        @endif
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

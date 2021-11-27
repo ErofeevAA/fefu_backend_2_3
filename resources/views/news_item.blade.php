@@ -21,6 +21,9 @@
         </style>
     </head>
     <body class="antialiased">
+
+        @include('ask_feedback')
+
         <a href="{{ route('news_list') }}">Новости</a>
         <h1>{{ $news->title }}</h1>
         <p>{{ $news->published_at }}</p>

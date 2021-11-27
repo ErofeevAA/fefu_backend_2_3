@@ -6,15 +6,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AppealPostRequest;
 use App\Models\Appeal;
 use App\Sanitizers\PhoneSanitizer;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class AppealController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
-        return view('appeal');
+        $showMessage = false;
+        if ($request->get('accepted', false)) {
+            $showMessage = $request->session()->get('show_message', false);
+            $request->session()->put('show_message', false);
+        }
+        return view('appeal', ['showMessage' => $showMessage]);
     }
 
-    public function save(AppealPostRequest $request)
+    public function save(AppealPostRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -28,6 +35,7 @@ class AppealController extends Controller
         $appeal->email = $validated['email'];
         $appeal->message = $validated['message'];
         $appeal->save();
+        $request->session()->put('appeal', true);
 
         return redirect()
             ->route('appeal')

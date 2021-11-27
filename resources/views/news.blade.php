@@ -21,6 +21,9 @@
         </style>
     </head>
     <body class="antialiased">
+
+        @include('ask_feedback')
+
         <h1>Новости</h1>
         @foreach($news as $n)
             <a href="{{ route('news_item', ['slug' => $n->slug]) }}">{{ $n->title }}</a>
