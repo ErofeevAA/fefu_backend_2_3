@@ -15,17 +15,12 @@ class PostResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $comments = null;
-        if (!is_null($this->comments)) {
-            $comments = CommentResource::collection($this->comments);
-        }
-
         return [
             'title' => $this->title,
             'slug' => $this->slug,
             'text' => $this->text,
             'author' => new UserResource($this->user),
-            'comments' => $comments,
+            'comments' => CommentResource::collection($this->comments);,
             'created_at' => $this->created_at->format('d-m-Y H:i'),
             'updated_at' => $this->updated_at->format('d-m-Y H:i')
         ];
