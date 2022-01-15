@@ -56,7 +56,7 @@ class WebAuthController extends Controller
 
     public function logout(Request $request)
     {
-        auth('web')->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('login');
