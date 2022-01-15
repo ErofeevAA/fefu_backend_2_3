@@ -70,7 +70,7 @@ class User extends Authenticatable
     static public $registerRules = [
         'email' => 'required|email|unique:users',
         'name' => 'required',
-        'login' => 'required|between:5,30|unique:users,login',
+        'login' => 'required|between:5,30|unique:users,login|regex: /^[a-z0-9_-]$/',
         'password' => 'required|between:10,30|regex:/^(?=(.*[A-Z]){1})(?=(.*[a-z]){1})(?=(.*[0-9]){1})(?=(.*[re@#$%^!&+=.\-_*]){1})([a-zA-Z0-9@#$%^!&+=*.\-_])*$/'
     ];
 
