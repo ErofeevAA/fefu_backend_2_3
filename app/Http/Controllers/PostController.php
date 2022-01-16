@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index() : JsonResponse
     {
-        $posts = Post::with('user')->ordered()->paginate(self::PAGE_SIZE);
+        $posts = Post::with('user', 'comments')->ordered()->paginate(self::PAGE_SIZE);
         return response()->json(PostResource::collection($posts));
     }
 

@@ -66,7 +66,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
-
+  
     static public $registerRules = [
         'email' => 'required|email|unique:users',
         'name' => 'required',
