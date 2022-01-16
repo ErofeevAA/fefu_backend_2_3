@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppealController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\WebAuthController;
 use App\Http\Middleware\SuggestAppeal;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,13 @@ Route::get('/appeal', [AppealController::class, 'create'])->name('appeal')
 
 Route::post('/appeal/save', [AppealController::class, 'save'])->name('save_appeal')
     ->withoutMiddleware([SuggestAppeal::class]);
+
+Route::match(['GET', 'POST'], '/login', [WebAuthController::class, 'login'])->name('login');
+
+Route::match(['GET', 'POST'], '/register', [WebAuthController::class, 'register'])->name('register');
+
+Route::get('/logout', [WebAuthController::class, 'logout'])->name('logout')
+    ->middleware('auth:sanctum');
+
+Route::get('/profile', [WebAuthController::class, 'profile'])->name('profile')
+    ->middleware('auth:sanctum');
